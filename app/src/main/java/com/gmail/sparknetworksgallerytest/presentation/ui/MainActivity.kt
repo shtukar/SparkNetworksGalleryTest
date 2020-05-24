@@ -3,8 +3,8 @@ package com.gmail.sparknetworksgallerytest.presentation.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.gmail.sparknetworksgallerytest.R
+import com.gmail.sparknetworksgallerytest.presentation.common.BaseActivity
 import com.gmail.sparknetworksgallerytest.presentation.ui.gallery.GalleryFragment
 
 fun Context.getMainActivityLaunchIntent(): Intent {
@@ -13,11 +13,12 @@ fun Context.getMainActivityLaunchIntent(): Intent {
     return intent
 }
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    override val layoutId: Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .add(R.id.container, GalleryFragment())

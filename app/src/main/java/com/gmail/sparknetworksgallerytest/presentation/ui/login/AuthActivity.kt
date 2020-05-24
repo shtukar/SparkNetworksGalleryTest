@@ -67,14 +67,14 @@ class LoginActivity : BaseActivity() {
                 false
             }
         } else {
-            emailWrapper.error = getString(R.string.text_required_field)
+            emailWrapper.error = getString(R.string.text_error_required_field)
             false
         }
 
         val passwordValid = if (etPassword.text?.isNotEmpty() == true) {
             true
         } else {
-            passwordWrapper.error = getString(R.string.text_required_field)
+            passwordWrapper.error = getString(R.string.text_error_required_field)
             false
         }
 

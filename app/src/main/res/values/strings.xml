@@ -5,8 +5,9 @@
     <string name="default_error">Something went wrong</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="text_required_field">This field is required</string>
+    <string name="btn_sign_in">Sign In</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="text_error_required_field">This field is required</string>
     <string name="text_error_email_is_invalid">Email is invalid.</string>
+    <string name="btn_log_out">Log out</string>
 </resources>

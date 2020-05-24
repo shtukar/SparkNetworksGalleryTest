@@ -14,10 +14,22 @@ class GalleryViewModel @Inject constructor(private val galleryUseCase: GalleryUs
 
     fun getUploadImageStatus(): LiveData<ResultState<Boolean>> = uploadImageStatus
 
+    private val imagesLinksStatus by lazy { MutableLiveData<ResultState<List<String>>>() }
+
+    fun getImagesLinksStatus(): LiveData<ResultState<List<String>>> = imagesLinksStatus
+
     fun uploadImage(filePath: Uri) {
         galleryUseCase.uploadImage(filePath)
                 .subscribe { result: ResultState<Boolean> ->
                     uploadImageStatus.postValue(result)
+                }
+                .track()
+    }
+
+    fun getAllUserImagesLinks() {
+        galleryUseCase.getAllUserImagesLinks()
+                .subscribe {
+                    imagesLinksStatus.postValue(it)
                 }
                 .track()
     }
