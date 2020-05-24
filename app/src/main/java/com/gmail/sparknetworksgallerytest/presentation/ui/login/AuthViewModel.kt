@@ -11,11 +11,11 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
 
     private val signInStatus by lazy { MutableLiveData<ResultState<Boolean>>() }
 
-    fun getSignInStatusStatus(): LiveData<ResultState<Boolean>> = signInStatus
+    fun getSignInStatus(): LiveData<ResultState<Boolean>> = signInStatus
 
     private val signUpStatus by lazy { MutableLiveData<ResultState<Boolean>>() }
 
-    fun getSignUpStatusStatus(): LiveData<ResultState<Boolean>> = signUpStatus
+    fun getSignUpStatus(): LiveData<ResultState<Boolean>> = signUpStatus
 
     fun signIn(email: String, password: String) {
         authUseCase.signIn(email, password)

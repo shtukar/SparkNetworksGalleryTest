@@ -40,8 +40,8 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        observe(viewModel.getSignInStatusStatus(), ::onAuth)
-        observe(viewModel.getSignUpStatusStatus(), ::onAuth)
+        observe(viewModel.getSignInStatus(), ::onAuth)
+        observe(viewModel.getSignUpStatus(), ::onAuth)
 
         btnSignIn.setOnClickListener {
             if (validateFields()) {
