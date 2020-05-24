@@ -41,6 +41,18 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_gallery_image" />
 
+            <TextView
+                android:id="@+id/tvNoItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_margin"
+                android:text="@string/text_no_items"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/btnLogOut"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ibUpload" />
+
             <Button
                 android:id="@+id/btnLogOut"
                 style="@style/Button"

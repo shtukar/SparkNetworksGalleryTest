@@ -7,10 +7,13 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.sparknetworksgallerytest.R
 import com.gmail.sparknetworksgallerytest.domain.common.ResultState
 import com.gmail.sparknetworksgallerytest.presentation.common.BaseFragment
+import com.gmail.sparknetworksgallerytest.presentation.extentions.hide
 import com.gmail.sparknetworksgallerytest.presentation.extentions.observe
+import com.gmail.sparknetworksgallerytest.presentation.extentions.show
 import com.gmail.sparknetworksgallerytest.presentation.ui.login.getLoginActivityLaunchIntent
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -55,7 +58,7 @@ class GalleryFragment : BaseFragment() {
             showLoading()
             viewModel.logOut()
         }
-        imagesListAdapter = ImagesListAdapter()
+        imagesListAdapter = ImagesListAdapter(parentActivity)
         layoutManager = GridLayoutManager(context, NUMBER_OF_COLUMNS)
         rvImagesList.layoutManager = layoutManager
         rvImagesList.adapter = imagesListAdapter
@@ -85,7 +88,12 @@ class GalleryFragment : BaseFragment() {
     private fun onImagesLinks(result: ResultState<List<String>>) {
         hideLoading()
         if (result is ResultState.Success) {
-            imagesListAdapter.setImagesLinksList(result.data)
+            if (result.data.isEmpty()) {
+                tvNoItems.show()
+            } else {
+                tvNoItems.hide()
+            }
+            imagesListAdapter.items = result.data.toMutableList()
         } else if (result is ResultState.Error) {
             showDefaultError()
         }

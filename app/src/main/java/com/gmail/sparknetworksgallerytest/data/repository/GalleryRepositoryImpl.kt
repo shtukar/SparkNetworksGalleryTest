@@ -1,10 +1,8 @@
 package com.gmail.sparknetworksgallerytest.data.repository
 
+import android.annotation.SuppressLint
 import android.net.Uri
-import com.gmail.sparknetworksgallerytest.data.EMPTY_STRING
-import com.gmail.sparknetworksgallerytest.data.IMAGE_FOLDER_STORAGE
-import com.gmail.sparknetworksgallerytest.data.SLASH_CHAR
-import com.gmail.sparknetworksgallerytest.data.USERS_LINKS_PATH
+import com.gmail.sparknetworksgallerytest.data.*
 import com.gmail.sparknetworksgallerytest.data.common.applyIoScheduler
 import com.gmail.sparknetworksgallerytest.domain.common.ResultState
 import com.gmail.sparknetworksgallerytest.domain.entity.ErrorState
@@ -17,6 +15,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GalleryRepositoryImpl(private val storage: FirebaseStorage,
                             private val database: FirebaseDatabase,
@@ -36,7 +36,7 @@ class GalleryRepositoryImpl(private val storage: FirebaseStorage,
                     childRef.downloadUrl.addOnCompleteListener {
                         dataBaseRef.child(USERS_LINKS_PATH)
                                 .child(userId)
-                                .child(dataBaseRef.push().key ?: EMPTY_STRING)
+                                .child(createTimestampString())
                                 .setValue(it.result?.toString())
                         subscriber.onSuccess(ResultState.Success(true))
                     }
@@ -60,8 +60,12 @@ class GalleryRepositoryImpl(private val storage: FirebaseStorage,
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
-                            val links = p0.value as Map<String, String>
-                            subscriber.onNext(ResultState.Success(links.values.toList()))
+                            val links = p0.value as? Map<String, String>
+                            links?.toSortedMap()?.values?.toList()?.reversed()?.let {
+                                subscriber.onNext(ResultState.Success(it))
+                            } ?: kotlin.run {
+                                subscriber.onNext(ResultState.Success(emptyList()))
+                            }
                         }
                     })
         }.applyIoScheduler()
@@ -74,5 +78,11 @@ class GalleryRepositoryImpl(private val storage: FirebaseStorage,
         } else {
             EMPTY_STRING
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun createTimestampString(): String {
+        val simpleDateFormat = SimpleDateFormat(IMAGE_NAME_DATE_FORMAT)
+        return simpleDateFormat.format(Date())
     }
 }
