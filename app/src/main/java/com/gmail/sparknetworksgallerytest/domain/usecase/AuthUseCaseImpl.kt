@@ -17,4 +17,8 @@ class AuthUseCaseImpl(private val repository: AuthRepository) : AuthUseCase {
     override fun signUp(email: String, password: String): Single<ResultState<Boolean>> {
         return repository.signUp(email, password)
     }
+
+    override fun logOut(): Single<ResultState<Boolean>> {
+        return repository.logOut()
+    }
 }

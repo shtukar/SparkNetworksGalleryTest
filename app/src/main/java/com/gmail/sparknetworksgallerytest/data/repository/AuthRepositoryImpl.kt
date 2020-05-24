@@ -44,4 +44,11 @@ class AuthRepositoryImpl(private val auth: FirebaseAuth) : AuthRepository {
                     }
         }.applyIoScheduler()
     }
+
+    override fun logOut(): Single<ResultState<Boolean>> {
+        return Single.create<ResultState<Boolean>> { subscriber ->
+            auth.signOut()
+            subscriber.onSuccess(ResultState.Success(true))
+        }
+    }
 }

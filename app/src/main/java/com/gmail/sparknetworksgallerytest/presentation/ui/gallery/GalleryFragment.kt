@@ -11,6 +11,7 @@ import com.gmail.sparknetworksgallerytest.R
 import com.gmail.sparknetworksgallerytest.domain.common.ResultState
 import com.gmail.sparknetworksgallerytest.presentation.common.BaseFragment
 import com.gmail.sparknetworksgallerytest.presentation.extentions.observe
+import com.gmail.sparknetworksgallerytest.presentation.ui.login.getLoginActivityLaunchIntent
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -38,6 +39,7 @@ class GalleryFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         observe(viewModel.getUploadImageStatus(), ::onImageUpload)
         observe(viewModel.getImagesLinksStatus(), ::onImagesLinks)
+        observe(viewModel.getLogOutStatus(), ::onLogOut)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,12 +51,16 @@ class GalleryFragment : BaseFragment() {
                         .start(context, this)
             }
         }
+        btnLogOut.setOnClickListener {
+            showLoading()
+            viewModel.logOut()
+        }
         imagesListAdapter = ImagesListAdapter()
         layoutManager = GridLayoutManager(context, NUMBER_OF_COLUMNS)
         rvImagesList.layoutManager = layoutManager
         rvImagesList.adapter = imagesListAdapter
-        viewModel.getAllUserImagesLinks()
         showLoading()
+        viewModel.getAllUserImagesLinks()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -80,6 +86,15 @@ class GalleryFragment : BaseFragment() {
         hideLoading()
         if (result is ResultState.Success) {
             imagesListAdapter.setImagesLinksList(result.data)
+        } else if (result is ResultState.Error) {
+            showDefaultError()
+        }
+    }
+
+    private fun onLogOut(result: ResultState<Boolean>) {
+        hideLoading()
+        if (result is ResultState.Success) {
+            startActivity(activity?.getLoginActivityLaunchIntent())
         } else if (result is ResultState.Error) {
             showDefaultError()
         }

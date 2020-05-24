@@ -9,4 +9,6 @@ interface AuthUseCase {
     fun signIn(email: String, password: String): Single<ResultState<Boolean>>
 
     fun signUp(email: String, password: String): Single<ResultState<Boolean>>
+
+    fun logOut(): Single<ResultState<Boolean>>
 }
