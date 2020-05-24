@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gmail.sparknetworksgallerytest.R
+import com.gmail.sparknetworksgallerytest.presentation.ui.gallery.GalleryFragment
 
 fun Context.getMainActivityLaunchIntent(): Intent {
     val intent = Intent(this, MainActivity::class.java)
@@ -17,10 +18,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                    .add(R.id.container, GalleryFragment())
-//                    .commit()
-//        }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.container, GalleryFragment())
+                    .commit()
+        }
     }
 }

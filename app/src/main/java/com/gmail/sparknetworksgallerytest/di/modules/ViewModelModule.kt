@@ -3,6 +3,7 @@ package com.gmail.sparknetworksgallerytest.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gmail.sparknetworksgallerytest.di.qualifier.ViewModelKey
+import com.gmail.sparknetworksgallerytest.presentation.ui.gallery.GalleryViewModel
 import com.gmail.sparknetworksgallerytest.presentation.ui.login.AuthViewModel
 import com.gmail.sparknetworksgallerytest.presentation.ui.splash.SplashScreenViewModel
 import dagger.Binds
@@ -24,4 +25,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AuthViewModel::class)
     internal abstract fun bindAuthViewModel(viewModel: AuthViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GalleryViewModel::class)
+    internal abstract fun bindGalleryViewModel(viewModel: GalleryViewModel): ViewModel
 }

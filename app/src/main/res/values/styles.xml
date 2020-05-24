@@ -7,13 +7,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@android:color/holo_orange_dark</item>
-    </style>
-
-
-    <style name="BaseButton" parent="@android:style/Widget.Button">
+    <style name="Button" parent="@android:style/Widget.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:minHeight">0dp</item>
@@ -28,7 +22,5 @@
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
-
-    <style name="Button" parent="@style/BaseButton" />
 
 </resources>
